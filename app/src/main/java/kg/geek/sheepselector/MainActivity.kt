@@ -24,13 +24,13 @@ class MainActivity : AppCompatActivity() {
     private fun btnFavorites() {
         val intent = Intent(this, FavoritesActivity::class.java)
         binding.btnStartSecondActivity.setOnClickListener {
-            intent.putExtra("images", secondList)
+            intent.putExtra(IMAGE_KEY, secondList)
             startActivity(intent)
         }
     }
 
     private fun createList() {
-        for (i in 1..30){
+        for (i in 1..30) {
             list.add(R.drawable.img_third_sheep)
             list.add(R.drawable.img)
             list.add(R.drawable.img_second)
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
-        adapter = MainAdapter(object : MainAdapter.OnItemClick{
+        adapter = MainAdapter(object : MainAdapter.OnItemClick {
 
             override fun onClick(image: Int) {
                 secondList.add(image)
@@ -53,5 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvMain.adapter = adapter
     }
 
-
+    companion object{
+         const val IMAGE_KEY= "images"
+    }
 }

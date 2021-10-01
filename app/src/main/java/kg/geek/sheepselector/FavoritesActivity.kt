@@ -18,7 +18,9 @@ class FavoritesActivity : AppCompatActivity() {
 
     private fun initRecycler() {
         adapter = MainAdapter(null)
-        intent.getIntegerArrayListExtra("images")?.let { adapter.setList(it) }
+        intent.getIntegerArrayListExtra(MainActivity.IMAGE_KEY)?.let { adapter.setList(it) }
         binding.rvFavorites.adapter = adapter
     }
+
+
 }

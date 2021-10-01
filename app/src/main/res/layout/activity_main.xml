@@ -10,21 +10,20 @@
         android:id="@+id/rv_main"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_start_second_activity"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/btn_start_second_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:spanCount="3"
-        tools:listitem="@layout/item_sheep"/>
+        tools:listitem="@layout/item_sheep" />
 
     <Button
+        android:id="@+id/btn_start_second_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:id="@+id/btn_start_second_activity"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/save"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
