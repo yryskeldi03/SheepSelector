@@ -1,51 +1,67 @@
 package kg.geek.sheepselector
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import kg.geek.sheepselector.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: MainAdapter
-    private var list = arrayListOf<Int>()
-    private var secondList = arrayListOf<Int>()
+    private var secondList = arrayListOf<Uri>()
+    private lateinit var getContent: ActivityResultLauncher<String?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        createList()
-        initRecycler()
+        getData()
+        btnOpenGallery()
         btnFavorites()
+    }
+
+    private fun getData() {
+
+        getContent = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) {
+            if (it != null) {
+                initRecycler(it as ArrayList<Uri>)
+            }
+        }
+        getContent.launch("image/*")
     }
 
     private fun btnFavorites() {
         val intent = Intent(this, FavoritesActivity::class.java)
-        binding.btnStartSecondActivity.setOnClickListener {
+        binding.bntStartFavoritesActivity.setOnClickListener {
             intent.putExtra(IMAGE_KEY, secondList)
             startActivity(intent)
         }
     }
 
-    private fun createList() {
-        for (i in 1..30) {
-            list.add(R.drawable.img_third_sheep)
-            list.add(R.drawable.img)
-            list.add(R.drawable.img_second)
+    private fun btnOpenGallery() {
+        binding.btnGallery.setOnClickListener {
+            getContent.launch("image/*")
         }
     }
 
-    private fun initRecycler() {
+    private fun initRecycler(list: ArrayList<Uri>) {
         adapter = MainAdapter(object : MainAdapter.OnItemClick {
 
-            override fun onClick(image: Int) {
+            override fun onClick(image: Uri) {
                 secondList.add(image)
+                binding.cardView.visibility = viewShow()
+                binding.tvImageCounter.text =
+                    String.format("Выбрано ${secondList.size} фотографии")
             }
 
-            override fun deleteClick(image: Int) {
+            override fun deleteClick(image: Uri) {
                 secondList.remove(image)
+                binding.cardView.visibility = viewShow()
+                binding.tvImageCounter.text = String.format("Выбрано ${secondList.size} фотографии")
             }
 
         })
@@ -53,7 +69,16 @@ class MainActivity : AppCompatActivity() {
         binding.rvMain.adapter = adapter
     }
 
-    companion object{
-         const val IMAGE_KEY= "images"
+    private fun viewShow(): Int {
+        return if (secondList.size < 1) {
+            0x00000004
+        } else {
+            0x00000000
+        }
+    }
+
+    companion object {
+        const val IMAGE_KEY = "images"
+
     }
 }

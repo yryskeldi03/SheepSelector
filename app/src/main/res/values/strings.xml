@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SheepSelector</string>
-    <string name="save">Save</string>
+    <string name="open_gallery">Open gallery</string>
     <string name="image">image</string>
+    <string name="ready">Готово</string>
+    <string name="check">check</string>
 </resources>

@@ -1,5 +1,6 @@
 package kg.geek.sheepselector
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kg.geek.sheepselector.databinding.ActivityFavoritesBinding
@@ -18,7 +19,7 @@ class FavoritesActivity : AppCompatActivity() {
 
     private fun initRecycler() {
         adapter = MainAdapter(null)
-        intent.getIntegerArrayListExtra(MainActivity.IMAGE_KEY)?.let { adapter.setList(it) }
+        adapter.setList(intent.getParcelableArrayListExtra<Uri>(MainActivity.IMAGE_KEY) as ArrayList<Uri>)
         binding.rvFavorites.adapter = adapter
     }
 
